@@ -1,4 +1,4 @@
-name: Java CI with Maven (NO SNYK)
+name: Java CI with Maven
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -37,3 +36,7 @@ jobs:
 
     - name: Package application
       run: mvn package
+
+  snyk:
+    uses: ./.github/workflows/snyk.yml
+    needs: build
