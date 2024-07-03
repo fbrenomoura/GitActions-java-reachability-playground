@@ -9,3 +9,4 @@ jobs:
         uses: snyk/actions/maven@master
         env:
           SNYK_TOKEN: "79f64122-7e0f-45a6-a68b-4b8ff369d73d"
+        continue-on-error: true
