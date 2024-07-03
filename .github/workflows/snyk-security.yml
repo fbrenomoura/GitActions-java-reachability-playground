@@ -1,0 +1,38 @@
+name: Snyk Security
+
+on: [workflow_call]
+
+permissions:
+  contents: read
+  security-events: write # para github/codeql-action/upload-sarif carregar resultados SARIF
+  actions: read # necessário apenas para um repositório privado para github/codeql-action/upload-sarif obter o status da execução da Ação
+
+jobs:
+  snyk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Snyk CLI to check for security issues
+        uses: snyk/actions/setup@v1.1.0
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Snyk Code test
+        run: snyk code test --sarif > snyk-code.sarif || true
+
+      - name: Snyk Open Source monitor
+        run: snyk monitor --all-projects
+
+      - name: Snyk IaC test and report
+        run: snyk iac test --report || true
+
+      - name: Build a Docker image
+        run: docker build -t your/image-to-test .
+
+      - name: Snyk Container monitor
+        run: snyk container monitor your/image-to-test --file=Dockerfile
+
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk-code.sarif
