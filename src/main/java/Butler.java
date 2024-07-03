@@ -12,6 +12,6 @@ public class Butler {
         ArrayList<String> list2 = new ArrayList<String>();
         list2.add("World");
 
-        System.out.println(ListUtils.union(list1, list2, list2));
+        System.out.println(ListUtils.union(list1, list2));
     }
 }
