@@ -54,7 +54,7 @@ jobs:
           echo App is deployable: ${{ vars.IS_APP_DEPLOYABLE }}
 
       - name: Deploy
-        if: ${{ needs.build.outputs.build_status && vars.IS_APP_DEPLOYABLE }}
+        if: ${{ needs.build.outputs.build_status && vars.IS_APP_DEPLOYABLE == 'true'}}
         run: |
           echo Deploy Successful
 
