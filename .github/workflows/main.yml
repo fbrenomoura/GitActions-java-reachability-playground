@@ -9,7 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    outputs:
+      build_status: ${{ steps.mvn_install.outputs.build_status }}
+    
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
@@ -29,13 +31,26 @@ jobs:
           ${{ runner.os }}-maven-
 
     - name: Install dependencies
-      run: mvn install -DskipTests
-
+      id: mvn_install
+      run: |
+        mvn install -DskipTests
+        echo "build_status=$?" >> $GITHUB_OUTPUT
+      continue-on-error: true
+      
     - name: Run tests
       run: mvn test
 
     - name: Package application
       run: mvn package
+
+  fakeDeploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print Build Status
+        run: |
+          echo "Status: ${{ steps.mvn_install.outputs.build_status }}"
+  
 
   snyk:
     uses: ./.github/workflows/snyk.yml
