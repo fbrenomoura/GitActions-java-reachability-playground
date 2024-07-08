@@ -50,7 +50,7 @@ jobs:
     steps:
       - name: Print Build Status
         run: |
-          echo ${{ steps.mvn_install.outputs.build_status }}
+          echo "${{ steps.mvn_install.outputs.build_status }}"
   
 
   snyk:
