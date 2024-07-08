@@ -34,7 +34,7 @@ jobs:
       id: mvn_install
       run: |
         mvn install -DskipTests
-        echo "build_status=$?" >> $GITHUB_OUTPUT
+        echo "build_status=true" >> $GITHUB_OUTPUT
       continue-on-error: true
       
     - name: Run tests
