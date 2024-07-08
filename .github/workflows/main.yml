@@ -53,12 +53,17 @@ jobs:
           echo "Build Status: ${{ needs.build.outputs.build_status }}"
 
       - name: Deploy
-        if: ${{ needs.build.outputs.build_status }}
-        run: echo Deploy Successful
+        if: ${{ needs.build.outputs.build_status && env.IS_APP_DEPLOYABLE }}
+        run: |
+          echo App is deployable: env.IS_APP_DEPLOYABLE
+          echo Deploy Successful
 
       - name: Destroy Artifacts
-        if: ${{ needs.build.outputs.build_status != 0}}
+        if: ${{ needs.build.outputs.build_status != 0 }}
         run: echo Artifacts Destroyed
+
+      - name: Save Deploy Env Informations       
+      
 
   snyk:
     uses: ./.github/workflows/snyk.yml
