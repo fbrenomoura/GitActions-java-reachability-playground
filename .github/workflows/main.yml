@@ -45,6 +45,7 @@ jobs:
 
   fakeDeploy:
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - name: Print Build Status
