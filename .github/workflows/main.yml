@@ -48,14 +48,14 @@ jobs:
     needs: build
 
     steps:
-      - name: Print Build Status
+      - name: Print Build Status and Deploy Details
         run: | 
           echo "Build Status: ${{ needs.build.outputs.build_status }}"
+          echo App is deployable: ${{ env.IS_APP_DEPLOYABLE }}
 
       - name: Deploy
         if: ${{ needs.build.outputs.build_status && env.IS_APP_DEPLOYABLE }}
         run: |
-          echo App is deployable: env.IS_APP_DEPLOYABLE
           echo Deploy Successful
 
       - name: Destroy Artifacts
