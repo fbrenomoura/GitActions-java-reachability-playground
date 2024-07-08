@@ -60,10 +60,7 @@ jobs:
 
       - name: Destroy Artifacts
         if: ${{ needs.build.outputs.build_status != 0 }}
-        run: echo Artifacts Destroyed
-
-      - name: Save Deploy Env Informations       
-      
+        run: echo Artifacts Destroyed      
 
   snyk:
     uses: ./.github/workflows/snyk.yml
