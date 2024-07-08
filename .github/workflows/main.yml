@@ -57,7 +57,7 @@ jobs:
         run: echo Deploy Successful
 
       - name: Destroy Artifacts
-        if: $!{{ needs.build.outputs.build_status }}
+        if: ${{ needs.build.outputs.build_status != 0}}
         run: echo Artifacts Destroyed
 
   snyk:
