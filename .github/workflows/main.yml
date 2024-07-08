@@ -49,9 +49,16 @@ jobs:
 
     steps:
       - name: Print Build Status
-        run: |
-          echo ${{ needs.build.outputs.build_status }}
-  
+        run: | 
+          echo "Build Status: ${{ needs.build.outputs.build_status }}"
+
+      - name: Deploy
+        if: ${{ needs.build.outputs.build_status }}
+        run: echo Deploy Successful
+
+      - name: Destroy Artifacts
+        if: $!{{ needs.build.outputs.build_status }}
+        run: echo Artifacts Destroyed
 
   snyk:
     uses: ./.github/workflows/snyk.yml
