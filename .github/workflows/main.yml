@@ -34,7 +34,6 @@ jobs:
       id: mvn_install
       run: |
         mvn install -DskipTests
-        echo "test: $?"
         echo "build_status=$?" >> $GITHUB_OUTPUT
       continue-on-error: true
       
@@ -51,7 +50,7 @@ jobs:
     steps:
       - name: Print Build Status
         run: |
-          echo "Status: ${{ steps.mvn_install.outputs.build_status }}"
+          echo ${{ steps.mvn_install.outputs.build_status }}
   
 
   snyk:
